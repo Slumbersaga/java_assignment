@@ -174,4 +174,18 @@ public class UserManagement {
             Utils.printNumberedList(users);
         }
     }
+
+    // Add student directly (for registration)
+    public void addStudentDirectly(User student) {
+        users.add(student);
+        studentCount++;
+    }
+
+    // Add user directly (for registration)
+    public void addUserDirectly(User user) {
+        users.add(user);
+        if ("student".equals(user.getUserType())) {
+            studentCount++;
+        }
+    }
 }

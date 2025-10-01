@@ -37,6 +37,8 @@ public class EnrollmentManagement {
             return true;
         } else {
             System.out.println("Invalid email or password!");
+            System.out.println("Debug: Total users in system: " + userManagement.getAllUsers().size());
+            System.out.println("Debug: Looking for email: " + email);
             return false;
         }
     }
@@ -105,13 +107,20 @@ public class EnrollmentManagement {
 
         // Create new user
         String userId = Utils.generateId(userType.equals("admin") ? "ADM" : "STU", 
-                                       userManagement.getAllUsers().size());
+                                       userManagement.getAllUsers().size() - 1);
         User newUser = new User(userId, username, email, phone, password, userType);
-        userManagement.getAllUsers().add(newUser);
+        
+        // Add user to the system through UserManagement
+        if (userType.equals("student")) {
+            userManagement.addStudentDirectly(newUser);
+        } else {
+            userManagement.addUserDirectly(newUser);
+        }
 
         System.out.println("Registration successful!");
         System.out.println("User ID: " + userId);
         System.out.println("User Type: " + userType.toUpperCase());
+        System.out.println("Total users in system: " + userManagement.getAllUsers().size());
         return true;
     }
 
